@@ -16,6 +16,7 @@ env:
 permissions:
   id-token: write
   contents: read
+  issues: write
 jobs:
   ejdp_databricks_terraform_deploy:
     runs-on: ubuntu-latest
