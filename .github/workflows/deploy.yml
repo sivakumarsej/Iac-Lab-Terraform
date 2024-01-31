@@ -1,0 +1,60 @@
+name: terraform_deploy
+on:
+  workflow_dispatch:
+    inputs:
+      Environment:
+         type: choice
+         description: "The deployement environment"
+         required : true
+         options:
+           - prod  
+           - preprod
+           - dev
+env:
+  AWS_REGION: "eu-west-1"
+  ENV: "dev"
+permissions:
+  id-token: write
+  contents: read
+jobs:
+  ejdp_databricks_terraform_deploy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ github.event.inputs.Environment }}
+        shell: bash
+        
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v3
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.SHIVA_AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.SHIVA_AWS_SECRET_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+      
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+
+      - name: Terraform Init
+        run: terraform init
+        
+      - name: Terraform Validate
+        run: terraform validate
+  
+      - name: Terraform Plan
+        run: terraform plan
+      
+      - name: Approval
+        uses: trstringer/manual-approval@v1
+        timeout-minutes: 60
+        with:
+          secret: ${{ github.TOKEN }}
+          approvers: ${{ vars.APPROVERS_LIST }}
+          minimum-approvals: 1
+          exclude-workflow-initiator-as-approver: false
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
