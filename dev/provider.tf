@@ -15,11 +15,9 @@ terraform {
     region         = "eu-west-1"
     dynamodb_table = "ekslab-terraform-locks"
     encrypt        = "true"
-    profile = "shiva-aws"
   }
 }
 
 provider "aws" {
   region  = var.aws_region
-  profile = "shiva-aws"
 }

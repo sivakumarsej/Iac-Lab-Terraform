@@ -114,7 +114,7 @@ resource "aws_eks_node_group" "eks_ng_private" {
     aws_iam_role_policy_attachment.eks-AmazonEC2ContainerRegistryReadOnly,
   ] 
   tags = {
-    Name = "Private-Node-Group"
+    Name = "private-node-group"
   }
 }
 
@@ -149,9 +149,9 @@ data "http" "ebs_csi_iam_policy" {
 }
 
 resource "aws_iam_policy" "ebs_csi_iam_policy" {
-  name        = "AmazonEKS_EBS_CSI_Driver_Policy"
+  name        = "amazoneks_ebs_csi_driver_policy"
   path        = "/"
-  description = "EBS CSI IAM Policy"
+  description = "ebs csi iam Policy"
   policy = data.http.ebs_csi_iam_policy.response_body
 }
 
