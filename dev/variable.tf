@@ -3,7 +3,7 @@ variable "aws_region" {
 }
 variable "vpc_name" {
   type = string 
-  default = "labvpc"
+  default = "labvpc-01"
 }
 
 variable "vpc_cidr_block" {
@@ -40,7 +40,7 @@ variable "vpc_single_nat_gateway" {
 
 variable "cluster_name" {
   type        = string
-  default     = "eksdemo"
+  default     = "labekscluster"
 }
 
 variable "cluster_service_ipv4_cidr" {
@@ -68,7 +68,7 @@ variable "cluster_endpoint_public_access_cidrs" {
 }
 
 variable "rds_subnet_group_name" {
-  default = "rds-subnet-group-dev"
+  default = "rds-subnet-group"
 }
 
 variable "rds_sg" {
