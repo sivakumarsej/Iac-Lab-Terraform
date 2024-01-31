@@ -1,6 +1,6 @@
 resource "aws_db_subnet_group" "rds_subnet_group" {
   name       = var.rds_subnet_group_name
-  subnet_ids = [module.vpc.private_subnets[0].id,module.vpc.private_subnets[1].id]
+  subnet_ids = module.vpc.private_subnets
 
   tags = {
     Name = "dev" 
