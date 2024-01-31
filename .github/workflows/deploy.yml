@@ -18,7 +18,7 @@ permissions:
   contents: read
   issues: write
 jobs:
-  ejdp_databricks_terraform_deploy:
+  deployment:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -26,7 +26,7 @@ jobs:
         shell: bash
         
     steps:
-      - name: checkout repo
+      - name: Checkout Repo
         uses: actions/checkout@v3
 
       - name: Configure AWS Credentials
